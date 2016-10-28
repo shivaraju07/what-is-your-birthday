@@ -1,4 +1,5 @@
 import webapp2
+import cgi
 
 form="""  
 <form method="post">
@@ -13,6 +14,15 @@ form="""
 	<input type="submit">
 </form> 
 """
+def escape_html(month):
+	return cgi escape(month, quote= True)
+
+def escape_html(day):
+	return cgi escape(day, quote= True)
+
+def escape_html(year):
+	return cgi escape(year, quote= True)
+
 def valid_year(year):
 		if year and year.isdigit():
 			year = int(year)
@@ -37,9 +47,9 @@ class MainPage(webapp2.RequestHandler):
 
 	def write_form(self, error="",month="",day="",year=""):
 		self.response.out.write(form % {"error": error,
-										"month": month,
-										"day": day,
-										"year": year})
+										"month": escape_html(month),
+										"day": escape_html(day),
+										"year": escape_html(year)})
 
 	def get(self):
 		self.write_form()
